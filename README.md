@@ -51,3 +51,7 @@ MIT. See [LICENSE](LICENSE).
 ## Git hooks
 
 `bun install` turns them on (`git config core.hooksPath .githooks`). Before a commit, `bun run check` makes sure every module parses and imports. Before a push, `bun test test` runs.
+
+## End-to-end tests
+
+`bun run e2e` runs the Playwright suite in `e2e/` against https://learn.flisk.si with your installed Chrome. Set `BASE_URL` to test another build.

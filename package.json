@@ -7,6 +7,10 @@
     "dev": "bun scripts/dev.mjs",
     "test": "bun test test",
     "check": "bun build ./src/index.js ./scripts/dev.mjs ./scripts/sync-content.mjs --target=bun --outdir=.check >/dev/null && rm -rf .check",
-    "prepare": "git config core.hooksPath .githooks"
+    "prepare": "git config core.hooksPath .githooks",
+    "e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1"
   }
 }
