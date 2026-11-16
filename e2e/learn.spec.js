@@ -46,8 +46,8 @@ test.describe('practice', () => {
   });
 });
 
-test('/auth/login sends the learner to GitHub', async ({ request }) => {
+test('/auth/login sends the learner to the Flisk sign-in', async ({ request }) => {
   const res = await request.get('/auth/login', { maxRedirects: 0 });
   expect(res.status()).toBe(302);
-  expect(res.headers().location).toMatch(/^https:\/\/github\.com\/login\/oauth\/authorize\?/);
+  expect(res.headers().location).toMatch(/^https:\/\/login\.flisk\.si\/start\?return=https%3A%2F%2Flearn\.flisk\.si%2Fauth%2Fdone/);
 });
