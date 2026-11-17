@@ -1,0 +1,22 @@
+{
+  "mode": "report",
+  "guards": {
+    "secret-scan": "report",
+    "pinned-actions": "report",
+    "workflow-permissions": "report",
+    "dead-links": "report",
+    "done-without-green": "report",
+    "north-star": "report"
+  },
+  "north_star": {
+    "metric": "share of signed-in learners who finish one lab on their own computer",
+    "baseline": "first measured week after sign-in ships",
+    "target": {
+      "ratio": 2,
+      "better": "higher"
+    },
+    "result": "docs/north-star/result.json",
+    "evidence": "docs/north-star/README.md",
+    "max_age_days": 30
+  }
+}
