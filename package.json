@@ -2,6 +2,7 @@
   "name": "flisk-learn",
   "private": true,
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "sync": "bun scripts/sync-content.mjs",
     "dev": "bun scripts/dev.mjs",
