@@ -7,7 +7,7 @@ import { githubAuthorizeUrl, githubLogin } from './auth.js';
 import { answerMessages, askModel, finishAnswer, MAX_QUESTION, passagesFor, takeToday } from './answer.js';
 import { fleetClient } from './fleet.js';
 import { LAB_IDS, inLabDir, labById, labDir, labsFor, safeFile, stepOf } from './labs.js';
-import { page, PROVIDERS } from './page.js';
+import { ICON_SVG, page, PROVIDERS } from './page.js';
 import { clearSession, makeSession, readSession, sameOrigin } from './session.js';
 import { withSecurityHeaders } from './security-headers.js';
 
@@ -138,6 +138,7 @@ export async function handle(request, env, { fetchImpl = fetch, cache = globalTh
     if (path === '/healthz') return new Response('ok');
     // The pages take no query string, so crawlers get no endless address space to walk.
     if (path === '/robots.txt') return new Response('User-agent: *\nDisallow: /*?\nDisallow: /api/\nDisallow: /auth/\n\nSitemap: https://learn.flisk.si/sitemap.xml\n', { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=86400' } });
+    if (path === '/favicon.ico') return new Response(ICON_SVG, { headers: { 'content-type': 'image/svg+xml; charset=utf-8', 'cache-control': 'public, max-age=86400', 'x-content-type-options': 'nosniff' } });
 
     if (path === '/sitemap.xml') {
       const base = new URL(env.PUBLIC_ORIGIN || 'https://learn.flisk.si').origin;
