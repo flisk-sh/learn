@@ -11,6 +11,12 @@ import { page, PROVIDERS } from './page.js';
 import { clearSession, makeSession, readSession, sameOrigin } from './session.js';
 import { withSecurityHeaders } from './security-headers.js';
 
+const SECURITY_TXT = `Contact: https://github.com/flisk-sh/learn/security/advisories/new
+Expires: 2027-06-01T00:00:00Z
+Preferred-Languages: en
+Canonical: https://learn.flisk.si/.well-known/security.txt
+`;
+
 const MODES = ['learn', 'practice', 'exam'];
 const ANSWERS_PER_DAY = 60; // written answers a day for everyone together; LEARN_AI_PER_DAY overrides it
 const ANSWERS_PER_VISITOR = 12;
@@ -137,6 +143,7 @@ export async function handle(request, env, { fetchImpl = fetch, cache = globalTh
   if (request.method === 'GET' || request.method === 'HEAD') {
     if (path === '/healthz') return new Response('ok');
     // The pages take no query string, so crawlers get no endless address space to walk.
+    if (path === '/.well-known/security.txt') return new Response(SECURITY_TXT, { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=86400' } });
     if (path === '/robots.txt') return new Response('User-agent: *\nDisallow: /*?\nDisallow: /api/\nDisallow: /auth/\n\nSitemap: https://learn.flisk.si/sitemap.xml\n', { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=86400' } });
 
     if (path === '/sitemap.xml') {
