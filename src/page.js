@@ -517,6 +517,8 @@ export function page({ mode = 'learn', lab = null, login = '', model = false, co
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#F7F6F2">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <title>${esc(title)}</title>
 ${canonical ? `<link rel="canonical" href="${esc(canonical)}">` : ''}
 <meta name="description" content="Learn Flisk and AI engineering: answers from the docs, labs on your own computer, and an exam scored on real work.">
