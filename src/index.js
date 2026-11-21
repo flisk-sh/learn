@@ -9,6 +9,7 @@ import { fleetClient } from './fleet.js';
 import { LAB_IDS, inLabDir, labById, labDir, labsFor, safeFile, stepOf } from './labs.js';
 import { page, PROVIDERS } from './page.js';
 import { clearSession, makeSession, readSession, sameOrigin } from './session.js';
+import { appleTouchIcon } from './apple-touch-icon.js';
 import { withSecurityHeaders } from './security-headers.js';
 
 const MODES = ['learn', 'practice', 'exam'];
@@ -136,6 +137,7 @@ export async function handle(request, env, { fetchImpl = fetch, cache = globalTh
 
   if (request.method === 'GET' || request.method === 'HEAD') {
     if (path === '/healthz') return new Response('ok');
+    if (path === '/apple-touch-icon.png') return new Response(appleTouchIcon, { headers: { 'content-type': 'image/png', 'cache-control': 'public, max-age=31536000, immutable' } });
     // The pages take no query string, so crawlers get no endless address space to walk.
     if (path === '/robots.txt') return new Response('User-agent: *\nDisallow: /*?\nDisallow: /api/\nDisallow: /auth/\n\nSitemap: https://learn.flisk.si/sitemap.xml\n', { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=86400' } });
 
