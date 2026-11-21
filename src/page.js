@@ -4,6 +4,10 @@
 import { COURSES, LAB_CARDS, PARTS } from './labs.js';
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+// One icon for the inline link and the /favicon.ico route: crawlers and older clients request the path directly.
+export const ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#000"/><path d="M9 8v16h14" fill="none" stroke="#EDEDEE" stroke-width="3.5"/></svg>';
+export const ICON_DATA_URL = `data:image/svg+xml,${encodeURIComponent(ICON_SVG)}`;
 // JSON inside a <script>: no "</script>" or "<!--" can close it early.
 const inlineJson = (v) => JSON.stringify(v).replace(/</g, '\\u003c');
 
@@ -521,7 +525,7 @@ export function page({ mode = 'learn', lab = null, login = '', model = false, co
 ${canonical ? `<link rel="canonical" href="${esc(canonical)}">` : ''}
 <meta name="description" content="Learn Flisk and AI engineering: answers from the docs, labs on your own computer, and an exam scored on real work.">
 ${canonical ? `<meta property="og:type" content="website"><meta property="og:title" content="${esc(title)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:description" content="Learn Flisk and AI engineering: answers from the docs, labs on your own computer, and an exam scored on real work."><meta name="twitter:card" content="summary">` : ''}
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Cpath d='M9 8v16h14' fill='none' stroke='%23EDEDEE' stroke-width='3.5'/%3E%3C/svg%3E">
+<link rel="icon" href="${ICON_DATA_URL}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>${CSS}</style>
