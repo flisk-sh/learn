@@ -11,6 +11,15 @@ import { page, PROVIDERS } from './page.js';
 import { clearSession, makeSession, readSession, sameOrigin } from './session.js';
 import { withSecurityHeaders } from './security-headers.js';
 
+const LLMS = `# Flisk Learn
+
+> Learn how the Flisk tools work, practise the steps on your own Fleet computer, and check what you know. Free, no sign-in.
+
+- [Learn](https://learn.flisk.si/)
+- [Practice](https://learn.flisk.si/practice)
+- [Exam](https://learn.flisk.si/exam) — not built yet; the page says what it will be.
+`;
+
 const MODES = ['learn', 'practice', 'exam'];
 const ANSWERS_PER_DAY = 60; // written answers a day for everyone together; LEARN_AI_PER_DAY overrides it
 const ANSWERS_PER_VISITOR = 12;
@@ -137,7 +146,8 @@ export async function handle(request, env, { fetchImpl = fetch, cache = globalTh
   if (request.method === 'GET' || request.method === 'HEAD') {
     if (path === '/healthz') return new Response('ok');
     // The pages take no query string, so crawlers get no endless address space to walk.
-    if (path === '/robots.txt') return new Response('User-agent: *\nDisallow: /*?\nDisallow: /api/\nDisallow: /auth/\n\nSitemap: https://learn.flisk.si/sitemap.xml\n', { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=86400' } });
+    if (path === '/llms.txt') return new Response(LLMS, { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=86400' } });
+    if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /llms.txt\nDisallow: /*?\nDisallow: /api/\nDisallow: /auth/\n\nSitemap: https://learn.flisk.si/sitemap.xml\n', { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=86400' } });
 
     if (path === '/sitemap.xml') {
       const base = new URL(env.PUBLIC_ORIGIN || 'https://learn.flisk.si').origin;
