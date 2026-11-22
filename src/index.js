@@ -7,8 +7,9 @@ import { githubAuthorizeUrl, githubLogin } from './auth.js';
 import { answerMessages, askModel, finishAnswer, MAX_QUESTION, passagesFor, takeToday } from './answer.js';
 import { fleetClient } from './fleet.js';
 import { LAB_IDS, inLabDir, labById, labDir, labsFor, safeFile, stepOf } from './labs.js';
-import { page, PROVIDERS } from './page.js';
+import { ICON_SVG, page, PROVIDERS } from './page.js';
 import { clearSession, makeSession, readSession, sameOrigin } from './session.js';
+import { appleTouchIcon } from './apple-touch-icon.js';
 import { withSecurityHeaders } from './security-headers.js';
 
 const SECURITY_TXT = `Contact: https://github.com/flisk-sh/learn/security/advisories/new
@@ -142,9 +143,11 @@ export async function handle(request, env, { fetchImpl = fetch, cache = globalTh
 
   if (request.method === 'GET' || request.method === 'HEAD') {
     if (path === '/healthz') return new Response('ok');
+    if (path === '/apple-touch-icon.png') return new Response(appleTouchIcon, { headers: { 'content-type': 'image/png', 'cache-control': 'public, max-age=31536000, immutable' } });
     // The pages take no query string, so crawlers get no endless address space to walk.
     if (path === '/.well-known/security.txt') return new Response(SECURITY_TXT, { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=86400' } });
     if (path === '/robots.txt') return new Response('User-agent: *\nDisallow: /*?\nDisallow: /api/\nDisallow: /auth/\n\nSitemap: https://learn.flisk.si/sitemap.xml\n', { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=86400' } });
+    if (path === '/favicon.ico') return new Response(ICON_SVG, { headers: { 'content-type': 'image/svg+xml; charset=utf-8', 'cache-control': 'public, max-age=86400', 'x-content-type-options': 'nosniff' } });
 
     if (path === '/sitemap.xml') {
       const base = new URL(env.PUBLIC_ORIGIN || 'https://learn.flisk.si').origin;
