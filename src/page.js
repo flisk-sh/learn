@@ -528,7 +528,7 @@ ${canonical ? `<meta property="og:type" content="website"><meta property="og:tit
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>${CSS}</style>
 <script>try{var t=JSON.parse(localStorage.getItem('learn:look'));if(t==='ivory')document.documentElement.dataset.theme=t}catch(e){}</script>
-<script src="https://flisk.si/assets/bar.js" defer></script>
+<script src="https://flisk.si/assets/bar.js" data-product="Learn" data-icon="learn-ai" data-accent="#5CBF7C" data-siblings="Cilytics,Ranker" data-text="Learn Flisk with short lessons, practice and an exam." defer></script>
 <script defer data-domain="learn.flisk.si" src="https://flisk.sh/a.js"></script>
 </head>
 <body>
