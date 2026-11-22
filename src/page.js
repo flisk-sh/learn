@@ -528,6 +528,7 @@ ${canonical ? `<link rel="canonical" href="${esc(canonical)}">` : ''}
 <meta name="description" content="Learn Flisk and AI engineering: answers from the docs, labs on your own computer, and an exam scored on real work.">
 ${canonical ? `<meta property="og:type" content="website"><meta property="og:title" content="${esc(title)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:description" content="Learn Flisk and AI engineering: answers from the docs, labs on your own computer, and an exam scored on real work."><meta name="twitter:card" content="summary">` : ''}
 <link rel="icon" href="${ICON_DATA_URL}">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>${CSS}</style>
