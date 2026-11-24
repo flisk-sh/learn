@@ -298,6 +298,21 @@ describe('Practice on a Fleet computer', () => {
     expect(body.needProvider).toBe(true);
     expect(f.calls.some((c) => c.method === 'POST')).toBe(false);
   });
+  test.each([
+    ['an upstream error', () => reply(503, { error: 'provider vault unavailable' })],
+    ['a network error', () => { throw new Error('Fleet unreachable'); }],
+    ['a malformed response', () => reply(200, {})],
+  ])('reports %s while checking providers without asking for a new key', async (_label, respond) => {
+    const calls = [];
+    const fetchImpl = async (url, init) => {
+      calls.push(`${init.method} ${new URL(url).pathname}`);
+      return respond();
+    };
+    const { status, body } = await post('/api/computer', {}, { cookie: await signedIn(), fetchImpl });
+    expect(status).toBe(502);
+    expect(body).toEqual({ error: 'Could not check computer providers. Try again.' });
+    expect(calls).toEqual(['GET /v1/connections']);
+  });
   test('connect sends the key to Fleet for a known provider only', async () => {
     const f = fleet();
     const cookie = await signedIn();

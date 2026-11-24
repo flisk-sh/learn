@@ -13,7 +13,7 @@ export function fleetClient(env, login, fetchImpl = fetch) {
   };
   const pod = (id) => `/v1/pods/${encodeURIComponent(id)}`;
   return {
-    connections: async () => (await call('GET', '/v1/connections')).data.connections || {},
+    connections: () => call('GET', '/v1/connections'),
     connect: (provider, key) => call('PUT', `/v1/connections/${encodeURIComponent(provider)}`, { key }),
     start: () => call('POST', '/v1/pods', { cpu: 2, ram: 4 }),
     run: (id, command) => call('POST', `${pod(id)}/run`, { command, timeout: 60 }),

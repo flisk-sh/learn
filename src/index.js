@@ -89,7 +89,11 @@ async function practice(path, request, env, login, fetchImpl) {
   }
 
   if (path === '/api/computer') {
-    const connections = await fleet.connections().catch(() => ({}));
+    const result = await fleet.connections().catch(() => null);
+    const connections = result?.data?.connections;
+    if (result?.status !== 200 || !connections || typeof connections !== 'object' || Array.isArray(connections)) {
+      return json(502, { error: 'Could not check computer providers. Try again.' });
+    }
     if (!Object.keys(connections).length) return json(409, { error: 'Connect a computer provider first.', needProvider: true });
     const r = await fleet.start();
     if (r.error || !r.data.id) return json(r.status === 409 ? 409 : 502, { error: r.error || 'Fleet did not start a computer.', needProvider: r.status === 409 || undefined });
